@@ -16,8 +16,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+
 app.use("/", function(req, res, next) {
-  res.render(__dirname + "/src/pages/index.html", { activeUsers: activeUsers });
+  res.render(__dirname + "/src/pages/index.ejs", { activeUsers: activeUsers });
 });
 
 io.on("connection", socket => {
