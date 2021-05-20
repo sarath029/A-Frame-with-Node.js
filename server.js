@@ -4,33 +4,32 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
-
+var bodyParser = require('body-parser');
 var activeUsers = 0;
 
-// Set up 'public' folder
-app.use(express.static("public"));
+app.set('views', __dirname + '/src/pages');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
-// Point / to index.html (could just put index.html in public but leaving for reference)
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+app.use(express.static("public"));
 app.use("/", function(req, res, next) {
-  res.sendFile("src/pages/index.html", { root: __dirname });
+  res.render(__dirname + "/src/pages/index.html", { activeUsers: activeUsers });
 });
 
 io.on("connection", socket => {
   activeUsers++;
   console.log("a user connected");
-  console.log('active: ', activeUsers);
-  
+  console.log("active: ", activeUsers);
+
   socket.on("disconnect", function() {
     activeUsers--;
     console.log("a user disconnected");
-    console.log('active: ', activeUsers);
+    console.log("active: ", activeUsers);
   });
-  
 });
 
 server.listen(process.env.PORT);
-
-// // listen for requests :)
-// const listener = app.listen(process.env.PORT, () => {
-//   console.log("App is listening on port " + listener.address().port);
-// });
