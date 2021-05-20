@@ -6,8 +6,9 @@
     <%= activeUsers %>
     <script>
       var socket = io();
-      const socketCount = io.of("/socket.io").sockets.size;
-      console.log("Bleh", socketCount);
+      socket.on('message', function(activeUser) {
+        console.log('acive users updated', activeUser);
+      });
     </script>
   </body>
 </html>

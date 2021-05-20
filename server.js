@@ -27,6 +27,7 @@ io.on("connection", socket => {
   activeUsers++;
   console.log("a user connected");
   console.log("active: ", activeUsers);
+  socket.emit('message', activeUsers);
 
   socket.on("disconnect", function() {
     activeUsers--;
