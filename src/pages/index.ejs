@@ -5,12 +5,9 @@
     <script src="/socket.io/socket.io.js"></script>
     <%= activeUsers %>
     <script>
-      const socket = io({
-        path: "/myownpath"
-      });
-      const socketCount = io.of("/admin").sockets.size;
-      console.log(socketCount);
-      
+      var socket = io();
+      const socketCount = io.of("/socket.io").sockets.size;
+      console.log("Bleh", socketCount);
     </script>
   </body>
 </html>
