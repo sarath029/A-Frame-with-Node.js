@@ -1,22 +1,23 @@
-const express = require('express');
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server();
+var express = require('express')
+var app = express()
 
-io.on("connection", socket => {
-  // either with send()
-  socket.send("Hello!");
+// respond with "hello world" when a GET request is made to the homepage
+app.get('/', function (req, res) {
+  res.send('hello world')
+})
 
+const fastify = require("fastify")({
+  logger: false
 });
 
 const path = require("path");
 let userAccessMap = new Map();
 
-const fastify = require("fastify")({
-  logger: false
-});
+fastify.register(require('fastify-socket.io'), {
+
+})
+
+
 
 // Setup our static files
 fastify.register(require("fastify-static"), {
@@ -37,7 +38,8 @@ fastify.register(require("point-of-view"), {
 
 // Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", function(request, reply) {
-  
+  fastify.io.emit('hello')
+
   let id = request.ip;
   let lastAccess = Date.now();
   userAccessMap.set(id, lastAccess);
