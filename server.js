@@ -24,18 +24,19 @@ fastify.register(require("point-of-view"), {
 
 // Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", function(request, reply) {
+  
   let id = request.ip;
   let lastAccess = Date.now();
   userAccessMap.set(id, lastAccess);
-  console.log(userAccessMap)
-  let params = { userAccessMap: userAccessMap};
+  let activeUserCount = userAccessMap.size
+  let params = { activeUserCount: activeUserCount};
   console.log(params)
   reply.view("/src/pages/index.hbs", params);
 
 });
 
 const cleanupFrequency = 10 * 1000;    
-const cleanupTarget = 10* 1000;   
+const cleanupTarget = 60 * 1000;   
 
 setInterval(() => {
     let now = Date.now();
@@ -44,6 +45,7 @@ setInterval(() => {
             userAccessMap.delete(id);
         }
     }
+    console.log('clear', userAccessMap)
 }, cleanupFrequency);
 
 
