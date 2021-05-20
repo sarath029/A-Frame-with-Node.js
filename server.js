@@ -21,41 +21,26 @@ fastify.register(require("point-of-view"), {
   }
 });
 
-// load and parse SEO data
-const seo = require("./src/seo.json");
-if (seo.url === "glitch-default") {
-  seo.url = `https://${process.env.PROJECT_DOMAIN}.glitch.me`;
-}
 
 // Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", function(request, reply) {
   let id = request.ip;
   let lastAccess = Date.now();
   userAccessMap.set(id, lastAccess);
-  
-  let params = { userAccessMap:userAccessMap };
-  if (request.query.randomize) {
-    // we need to load our color data file, pick one at random, and add it to the params
-    const colors = require("./src/colors.json");
-    const allColors = Object.keys(colors);
-    let currentColor = allColors[(allColors.length * Math.random()) << 0];
-    params = {
-      color: colors[currentColor],
-      colorError: null,
-      seo: seo
-    };
-  }
+  console.log(userAccessMap)
+  let params = { userAccessMap: userAccessMap};
+  console.log(params)
   reply.view("/src/pages/index.hbs", params);
+
 });
 
-const cleanupFrequency = 30 * 1000;    
-const cleanupTarget = 24 * 60 * 1000;   // clean out users who haven't been here in the last day
+const cleanupFrequency = 10 * 1000;    
+const cleanupTarget = 10* 1000;   
 
 setInterval(() => {
     let now = Date.now();
     for (let [id, lastAccess] of userAccessMap.entries()) {
         if (now - lastAccess > cleanupTarget) {
-            // delete users who haven't been here in a long time
             userAccessMap.delete(id);
         }
     }
