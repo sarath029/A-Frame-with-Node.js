@@ -3,12 +3,13 @@
   <head> </head>
   <body>
     <script src="/socket.io/socket.io.js"></script>
-    <%= activeUsers %>
     <script>
       var socket = io();
+      
       socket.on('message', function(activeUser) {
         console.log('acive users updated', activeUser);
       });
     </script>
+    <%= activeUsers %>
   </body>
 </html>
