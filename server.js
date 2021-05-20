@@ -1,26 +1,19 @@
-const express = require('express');
-const app = express();
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
-const io = new Server(server);
-
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
+var express = require('express');
+var socket = require('socket.io');
+var app = express();
+var server = app.listen(1111, function(){ console.log("Server Listening"); });
+var io = socket(server);
 
 
-app.use(express.static("public"));
+// Set up 'public' folder 
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.get("/", (request, response) => {
-  response.sendFile(__dirname + "/src/pages/index.html");
-});
+// Point / to index.html (could just put index.html in public but leaving for reference)
+app.use('/', function(req, res, next){
+  res.sendFile('src/pages/index.html', { root : __dirname })
+})
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-});
-
-
-const listener = app.listen(process.env.PORT, () => {
-  console.log("Your app is listening on port " + listener.address().port);
+// Create new websocket 
+io.sockets.on('connection', function (socket) {
+  
 });
