@@ -1,8 +1,7 @@
 const path = require("path");
+let userAccessMap = new Map();
 
-// Require the fastify framework and instantiate it
 const fastify = require("fastify")({
-  // set this to true for detailed logging:
   logger: false
 });
 
@@ -30,9 +29,11 @@ if (seo.url === "glitch-default") {
 
 // Our home page route, this pulls from src/pages/index.hbs
 fastify.get("/", function(request, reply) {
-  // params is an object we'll pass to our handlebars template
-  let params = { seo: seo };
-  // check and see if someone asked for a random color
+  let id = request.ip;
+  let lastAccess = Date.now();
+  userAccessMap.set(id, lastAccess);
+  
+  let params = { userAccessMap:userAccessMap };
   if (request.query.randomize) {
     // we need to load our color data file, pick one at random, and add it to the params
     const colors = require("./src/colors.json");
@@ -47,35 +48,19 @@ fastify.get("/", function(request, reply) {
   reply.view("/src/pages/index.hbs", params);
 });
 
-// A POST route to handle and react to form submissions 
-fastify.post("/", function(request, reply) {
-  let params = { seo: seo };
-  // the request.body.color is posted with a form submission
-  let color = request.body.color;
-  // if it's not empty, let's try to find the color
-  if (color) {
-    // load our color data file
-    const colors = require("./src/colors.json");
-    // take our form submission, remove whitespace, and convert to lowercase
-    color = color.toLowerCase().replace(/\s/g, "");
-    // now we see if that color is a key in our colors object
-    if (colors[color]) {
-      // found one!
-      params = {
-        color: colors[color],
-        colorError: null,
-        seo: seo
-      };
-    } else {
-      // try again.
-      params = {
-        colorError: request.body.color,
-        seo: seo
-      };
+const cleanupFrequency = 30 * 1000;    
+const cleanupTarget = 24 * 60 * 1000;   // clean out users who haven't been here in the last day
+
+setInterval(() => {
+    let now = Date.now();
+    for (let [id, lastAccess] of userAccessMap.entries()) {
+        if (now - lastAccess > cleanupTarget) {
+            // delete users who haven't been here in a long time
+            userAccessMap.delete(id);
+        }
     }
-  }
-  reply.view("/src/pages/index.hbs", params);
-});
+}, cleanupFrequency);
+
 
 // Run the server and report out to the logs
 fastify.listen(process.env.PORT, function(err, address) {
