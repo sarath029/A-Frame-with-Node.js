@@ -1,3 +1,16 @@
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server();
+
+io.on("connection", socket => {
+  // either with send()
+  socket.send("Hello!");
+
+});
+
 const path = require("path");
 let userAccessMap = new Map();
 
