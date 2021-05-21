@@ -11,18 +11,16 @@
     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
     <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
-    
+
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var socket = io();
 
-      socket.on('message', function(activeUser) {
-        console.log('acive users updated', activeUser);
-        
+      socket.on("message", function(activeUser) {
+        console.log("acive users updated", activeUser);
+
         var entity = document.querySelector("#text-box");
         entity.setAttribute("text", "value: Active User Count:" + activeUser);
-      
-        
       });
     </script>
     <script>
@@ -99,7 +97,7 @@
         scale="2 2 2"
       ></a-entity>
       <a-entity
-        id ="text-box"
+        id="text-box"
         text="value: Active User Count: 0"
         position="1.2 .07 -2.1"
         scale="4 4 4"

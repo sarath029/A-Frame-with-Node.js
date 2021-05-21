@@ -1,15 +1,14 @@
 body {
   font-family: helvetica, arial, sans-serif;
   margin: 1em;
-  
 }
 
-a-scene{
-  z-index:1;
+a-scene {
+  z-index: 1;
 }
 
 div#text {
-  z-index:5;
+  z-index: 5;
   position: absolute;
   left: 6px;
   top: 6px;
@@ -18,8 +17,7 @@ div#text {
 }
 
 .centered {
-  
-  z-index:5;
+  z-index: 5;
   height: 20%;
   justify-content: center;
   position: fixed;
@@ -33,7 +31,7 @@ div#text {
 }
 
 button {
-  z-index:1;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
