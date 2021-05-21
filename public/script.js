@@ -5,8 +5,8 @@ window.onload = () => {
 var models = [
   {
     url:
-      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fsingle_seater_chair.glb?v=1621599032985",
-    scale: "0.7 0.7 0.7"
+      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fcoffe_table.glb?v=1621599028117",
+    scale: "1.2 1.2 1.2"
   },
   {
     url:
@@ -20,17 +20,17 @@ var models = [
   },
   {
     url:
-      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fliving_room_chair.glb?v=1621599035321",
-    scale: "1 1 1"
+      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fsingle_seater_chair.glb?v=1621599032985",
+    scale: "0.7 0.7 0.7"
   },
   {
     url:
-      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fcoffe_table.glb?v=1621599028117",
+      "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fliving_room_chair.glb?v=1621599035321",
     scale: "1 1 1"
   }
 ];
 
-var modelIndex = 0;
+var modelIndex = -1;
 
 var setModel = function(model, entity) {
   if (model.scale) {
