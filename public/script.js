@@ -1,7 +1,7 @@
 window.onload = () => {
   renderItems();
-  
 };
+
 
 var models = [
   {
@@ -55,10 +55,9 @@ var setModel = function(model, entity) {
 };
 
 function renderItems() {
+  
   let scene = document.querySelector("a-scene");
-  let model = document.createElement("a-entity");
-  console.log(model);
-  console.log(models[modelIndex]);
+  
 
   document.querySelector("a-circle").addEventListener("click", function() {
     var entity = document.querySelector("[gltf-model]");
@@ -66,6 +65,4 @@ function renderItems() {
     var newIndex = modelIndex % models.length;
     setModel(models[newIndex], entity);
   });
-
-  scene.appendChild(model);
 }
