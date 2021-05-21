@@ -18,11 +18,17 @@
 
       socket.on('message', function(activeUser) {
         console.log('acive users updated', activeUser);
+        
         let entity = document.createElement("a-entity");
-        entity.setAttribute("", text="value: Active User Count: 0"
-        position="1.2 .07 -2.1"
-        scale="4 4 4");
-          
+        
+        entity.setAttribute("text", "value: Active User Count:" + activeUser);
+        entity.setAttribute("position", "1.2 .07 -2.1");
+        entity.setAttribute("scale", "4 4 4");  
+        
+        
+        let scene = document.querySelector("a-scene");
+
+        scene.appendChild(entity);
       });
     </script>
     <script>
@@ -98,11 +104,11 @@
         position="0.4 .07 -1.9"
         scale="2 2 2"
       ></a-entity>
-      <a-entity
+<!--       <a-entity
         text="value: Active User Count: 0"
         position="1.2 .07 -2.1"
         scale="4 4 4"
-      ></a-entity>
+      ></a-entity> -->
 
       <a-camera><a-cursor></a-cursor></a-camera>
       <!--       <div class="centered">

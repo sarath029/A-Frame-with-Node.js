@@ -25,9 +25,10 @@ app.use("/", function(req, res, next) {
 
 io.on("connection", socket => {
   activeUsers++;
+  var au = activeUsers;
   console.log("a user connected");
   console.log("active: ", activeUsers);
-  socket.emit('message', activeUsers);
+  socket.emit('message', au);
 
   socket.on("disconnect", function() {
     activeUsers--;

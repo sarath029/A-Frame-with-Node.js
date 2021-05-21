@@ -57,7 +57,9 @@ var setModel = function(model, entity) {
 function renderItems() {
   
   let scene = document.querySelector("a-scene");
-  
+
+  // scene.appendChild(model);
+  // let model = document.createElement("a-entity");
 
   document.querySelector("a-circle").addEventListener("click", function() {
     var entity = document.querySelector("[gltf-model]");
@@ -65,4 +67,5 @@ function renderItems() {
     var newIndex = modelIndex % models.length;
     setModel(models[newIndex], entity);
   });
+
 }
