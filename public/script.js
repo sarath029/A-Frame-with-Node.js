@@ -6,7 +6,7 @@ var models = [
   {
     url:
       "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fcoffe_table.glb?v=1621599028117",
-    scale: "1.2 1.2 1.2"
+    scale: "1.1 1.1 1.1"
   },
   {
     url:
@@ -16,7 +16,7 @@ var models = [
   {
     url:
       "https://cdn.glitch.com/26a5cd73-7501-4013-96ea-9280595b4e9e%2Fsofa_bed.glb?v=1621599034402",
-    scale: "0.004 0.007 0.007"
+    scale: "0.005 0.005 0.005"
   },
   {
     url:
