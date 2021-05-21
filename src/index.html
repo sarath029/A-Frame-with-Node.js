@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>XR Catalog</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="style.css" />
+    <script rel="stylesheet" src="script.js"></script>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-extras@3.3.0/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+
+    <script>
+      AFRAME.registerComponent("hide-in-ar-mode", {
+        init: function() {
+          this.el.sceneEl.addEventListener("enter-vr", ev => {
+            this.wasVisible = this.el.getAttribute("visible");
+            if (this.el.sceneEl.is("ar-mode")) {
+              this.el.setAttribute("visible", false);
+            }
+          });
+          this.el.sceneEl.addEventListener("exit-vr", ev => {
+            if (this.wasVisible) this.el.setAttribute("visible", true);
+          });
+        }
+      });
+    </script>
+  </head>
+
+  <body>
+    <a-scene>
+      <a-entity
+        environment="preset: default; lighting: none; shadow: none; lightPosition: 0 2.15 0"
+        hide-in-ar-mode
+      ></a-entity>
+
+      <a-entity
+        animation="property: rotation; dur: 30000; loop:true; to: '0 360 0"
+        id="item"
+        position="0 0 -3"
+        scale="1.5 1.5 1.5"
+      >
+        <a-entity
+          gltf-model="https://cdn.glitch.com/d2ef3a07-e8ff-4d41-ad3d-621a0282115c%2Fcoffe_table.glb?v=1621452737239"
+        ></a-entity>
+      </a-entity>
+
+      <a-entity light="type: ambient; intensity: 0.5;"></a-entity>
+
+      <a-light
+        type="directional"
+        id="light"
+        target="item"
+        position="-5 3 1.5"
+      ></a-light>
+
+      <a-plane
+        height="15"
+        width="15"
+        position="0 0 -3"
+        rotation="-90 0 0"
+        shadow="receive: true"
+        ar-shadows="opacity: 0.3"
+        visible="false"
+      ></a-plane>
+
+      <a-circle
+        data-action="change"
+        radius=".10"
+        color="#000000"
+        position="0 1.5 -1.5"
+      >
+        <a-triangle
+          color="#FFFFFF"
+          position="0.015 0 0.01"
+          rotation="0 0 -90"
+          scale="0.10 0.10 0.10"
+        ></a-triangle>
+      </a-circle>
+
+      <a-entity
+        text="value: click button to view next object"
+        position="0.4 .07 -1.9"
+        scale="2 2 2"
+      ></a-entity>
+      <a-entity
+        text="value: Active User Count: 0"
+        position="1.2 .07 -2.1"
+        scale="4 4 4"
+      ></a-entity>
+
+      <a-camera><a-cursor></a-cursor></a-camera>
+      <!--       <div class="centered">
+        <button>&gt</button>
+      </div> -->
+      <div id="text">
+        <p>
+          This requires browser support for WebXR's AR mode.
+        </p>
+      </div>
+    </a-scene>
+  </body>
+</html>
